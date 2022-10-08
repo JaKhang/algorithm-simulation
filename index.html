@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./asset/icon/dd4e5ee83c35523f1e06fc7548af119c.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Algorithm</title>
+</head>
+
+<body>
+    <div id="root">
+        <div id="header">
+            <h2 class="logo">Algorithm</h2>
+            <div class="header-control">
+                <div class="header-group"><label for="algorithm">Algorithm</label><br>
+                    <select name="algorithm" id="algorithm-select" class="input-feild">
+                        <option value="ss">Selection sort</option>
+                        <option value="bs">Bubble sort</option>
+                        <option value="is">Insertion sort</option>
+                    </select>
+                </div>
+
+                <div class="header-group">
+                    <label for="deplay">Deplay</label><br>
+                    <input type="number" placeholder="ms" name="deplay" class="input-feild" step="100" value="0"
+                        id="deplay">
+                    <div class="range-group"><label for="">1</label>
+                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="50"
+                            value="0" max="1000">
+                        <label for="">1000</label>
+                    </div>
+
+                </div>
+
+                <div class="header-group">
+                    <label for="list-size">List size</label><br>
+                    <input type="number" placeholder="" name="list-size" id="list-size" class="input-feild" value="50">
+                    <div class="range-group">
+                        <label for="">1</label>
+                        <input type="range" class="range-input" name="range-size" id="range-size" step="1" max="2000"
+                            min="1" value="50">
+                        <label for="">2000</label>
+                    </div>
+                </div>
+
+                <div class="header-group">
+                    <button class="btn" id="start-btn">Start</button>
+                    <button class="btn" id="reset-btn">Reset</button>
+                    <button class="btn" id="compound-btn">Compound</button>
+                </div>
+
+            </div>
+        </div>
+        <div id="info">
+            <h2 class="info-header">Time complexity</h2>
+            <div class="info-body">
+                <h3 id="best-case">Best case: O( n<sup>2</sup> )</h3>
+                <h3 id="average-case">Average case: O( n<sup>2</sup> )</h3>
+                <h3 id="worest-case">Worest case: O( n<sup>2</sup> )</h3>
+            </div>
+        </div>
+
+        <div id="frame">
+
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

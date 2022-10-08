@@ -1,0 +1,14 @@
+:root {
+    --primary-color: #21bba1;
+    --drark-color: #04161D;
+    --light-color: #fff;
+    --pale-color1: #F2F3F7;
+    --pale-color2: #DAE4F0
+}
+
+
+html {
+    font-family: 'Teko', sans-serif;
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
