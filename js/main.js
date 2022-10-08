@@ -385,8 +385,8 @@ class App {
                 }
                 case 'qs': {
                     _this.currentAlgorithm = _this.quickSort;
-                    best.innerHTML = 'Best case: O( n )'
-                    average.innerHTML = 'Average case: O( n<sup>2</sup> )'
+                    best.innerHTML = 'Best case: O( nLog(n) )'
+                    average.innerHTML = 'Average case: O( nLog(n) )'
                     worest.innerHTML = 'Worest case: O( n<sup>2</sup> )'
                 }
             }
