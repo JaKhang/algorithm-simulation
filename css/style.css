@@ -7,7 +7,8 @@
     --min: rgb(70, 130, 86);
     --current: rgb(229, 101, 101);
     --loop-1: rgb(72, 66, 193);
-    --max: rgb(188, 200, 25);
+    --left: rgb(188, 200, 25);
+    --right: rgb(132, 6, 170);
 }
 
 #header {
@@ -163,6 +164,10 @@
     border-bottom-color: var(--loop-1);
 }
 
-.element.max {
-    background-color: var(--max) !important;
+.element.left {
+    background-color: var(--left) !important;
+}
+
+.element.right {
+    background-color: var(--right) !important;
 }
