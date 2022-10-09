@@ -115,7 +115,6 @@
 
 #info {
     padding: 12px 64px;
-    width: 360px;
 }
 
 .info-header {
@@ -125,9 +124,16 @@
 
 .info-body {
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
+    align-items: baseline;
     font-size: 1.6rem;
 }
+
+.info-body h3+h3 {
+    margin-left: 16px;
+}
+
+
 
 #frame {
     height: 540px;

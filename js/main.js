@@ -61,6 +61,7 @@ class App {
             this.removeAllClass('left')
             this.removeAllClass('right')
         }
+        this.renderExcutionTime("---")
 
     }
 
@@ -128,6 +129,13 @@ class App {
         this.elements[index].classList.remove(className);
     }
 
+    renderExcutionTime(time) {
+        if (isNaN(time))
+            document.querySelector("#execution-time").innerHTML = 'Execution time : ' + time;
+        else if (this.deplay == 0)
+            document.querySelector("#execution-time").innerHTML = 'Execution time : ' + Math.floor(time) + ' ms';
+    }
+
 
     /*
         Algorithm
@@ -140,6 +148,7 @@ class App {
         if (this.isRunning)
             return;
         this.isRunning = true;
+        var start = performance.now();
         for (let i = 0; i < this.getListSize(); i++) {
             var indexOfMin = i;
             this.addClass(indexOfMin, 'min-index')
@@ -166,6 +175,7 @@ class App {
             this.elements[i].classList.remove('loop1');
 
         }
+        this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
     }
 
@@ -173,6 +183,7 @@ class App {
         if (this.isRunning)
             return;
         this.isRunning = true;
+        var start = performance.now();
         for (let i = 0; i < this.getListSize(); i++) {
             this.elements[i].classList.add('loop1');
             for (let j = 0; j < this.getListSize() - i - 1; j++) {
@@ -198,6 +209,7 @@ class App {
             this.elements[i].classList.remove('loop1');
             this.elements[this.getListSize() - i - 1].classList.remove('current');
         }
+        this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
     }
 
@@ -207,6 +219,7 @@ class App {
         if (this.isRunning)
             return;
         this.isRunning = true;
+        var start = performance.now();
         for (let i = 0; i < this.getListSize(); i++) {
             this.elements[i].classList.add('current');
             await this.sleep(this.deplay / 2)
@@ -226,6 +239,7 @@ class App {
 
 
         }
+        this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
     }
 
@@ -233,7 +247,9 @@ class App {
         if (this.isRunning)
             return;
         this.isRunning = true;
+        var start = performance.now();
         await this._quickSort(0, this.getListSize() - 1)
+        this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
     }
 
@@ -361,6 +377,7 @@ class App {
 
 
         algorithmSelection.onchange = function () {
+            resetBtn.click()
             switch (algorithmSelection.value) {
                 case 'ss': {
                     _this.currentAlgorithm = _this.selectionSort;
