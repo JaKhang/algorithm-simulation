@@ -83,7 +83,7 @@ class App {
             return;
         this.isShowText = n <= 50;
         if (n > this.getListSize())
-            this.addElements(n);
+            this.addElements(n - this.getListSize());
         else
             this.removeElements(this.getListSize() - n);
         this.compound();
