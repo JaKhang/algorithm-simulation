@@ -55,11 +55,13 @@ class App {
         for (let i = 0; i < this.elements.length; i++) {
             this.setElementValue(i, this.values[i]);
             this.removeAllClass('current');
-            this.removeAllClass('min-index');
+            this.removeAllClass('green');
             this.removeAllClass('loop1')
             this.removeAllClass('max')
             this.removeAllClass('left')
             this.removeAllClass('right')
+            this.removeAllClass('left-1')
+            this.removeAllClass('right-1')
         }
         this.renderExcutionTime("---")
 
@@ -151,28 +153,29 @@ class App {
         var start = performance.now();
         for (let i = 0; i < this.getListSize(); i++) {
             var indexOfMin = i;
-            this.addClass(indexOfMin, 'min-index')
-            // this.elements[i].classList.add('loop1');
+            this.addClass(indexOfMin, 'green')
+            this.addClass(i, 'loop1');
             for (let j = i + 1; j < this.getListSize(); j++) {
                 this.addClass(j, 'current')
-
-                await this.sleep(this.deplay / 2)
+                await this.sleep(this.deplay)
 
                 if (this.elements[indexOfMin].value > this.elements[j].value) {
-                    this.elements[indexOfMin].classList.remove('min-index')
-                    this.elements[j].classList.add('min-index')
+                    this.elements[indexOfMin].classList.remove('green')
+                    this.addClass(j, 'green')
                     indexOfMin = j;
                 }
-                await this.sleep(this.deplay / 4)
-                this.elements[j].classList.remove('current');
-                await this.sleep(this.deplay / 4)
+                await this.sleep(this.deplay)
+                this.removeClass(j, 'current');
+                await this.sleep(this.deplay)
 
                 if (!this.isRunning)
                     return;
             }
             this.swap(i, indexOfMin);
-            this.elements[indexOfMin].classList.remove('min-index')
-            this.elements[i].classList.remove('loop1');
+            this.removeClass(indexOfMin, 'green')
+            this.removeClass(i, 'loop1');
+            await this.sleep(this.deplay)
+
 
         }
         this.renderExcutionTime(performance.now() - start)
@@ -187,25 +190,25 @@ class App {
         for (let i = 0; i < this.getListSize(); i++) {
             this.elements[i].classList.add('loop1');
             for (let j = 0; j < this.getListSize() - i - 1; j++) {
-                this.elements[j].classList.add('current');
-                await this.sleep(this.deplay / 5)
-                this.elements[j].classList.remove('current');
-                await this.sleep(this.deplay / 5)
-                this.elements[j].classList.add('current');
-                await this.sleep(this.deplay / 5)
-                this.elements[j + 1].classList.add('current');
-                await this.sleep(this.deplay / 5)
+
+                this.addClass(j, 'current');
+                await this.sleep(this.deplay)
+                this.addClass(j + 1, 'green');
+                await this.sleep(this.deplay)
+                await this.sleep(this.deplay)
+
 
                 if (this.elements[j].value > this.elements[j + 1].value) {
                     this.swap(j, j + 1)
                 }
-                await this.sleep(this.deplay / 4)
-                this.elements[j].classList.remove('current');
-                this.elements[j].classList.remove('current');
+                this.removeClass(j + 1, 'green');
+                await this.sleep(this.deplay)
+                this.removeClass(j, 'current');
+
+
                 if (!this.isRunning)
                     return;
             }
-
             this.elements[i].classList.remove('loop1');
             this.elements[this.getListSize() - i - 1].classList.remove('current');
         }
@@ -213,20 +216,17 @@ class App {
         this.isRunning = false;
     }
 
-
-
     async insertionSort() {
         if (this.isRunning)
             return;
         this.isRunning = true;
         var start = performance.now();
         for (let i = 0; i < this.getListSize(); i++) {
-            this.elements[i].classList.add('current');
-            await this.sleep(this.deplay / 2)
-            this.elements[i].classList.remove('current');
+            this.addClass(i, 'current');
+
             var temp = this.elements[i].value;
             this.elements[i].value = 0
-            await this.sleep(this.deplay / 2)
+            await this.sleep(this.deplay)
             var j = i;
             while (j > 0 && this.elements[j - 1].value > temp) {
                 await this.sleep(this.deplay)
@@ -234,6 +234,8 @@ class App {
                 j--;
             }
             this.setElementValue(j, temp)
+            await this.sleep(this.deplay)
+            this.removeClass(i, 'current');
             if (!this.isRunning)
                 return;
 
@@ -269,30 +271,109 @@ class App {
 
         var pivot = this.elements[right].value;
         var l = left;
-        this.addClass(l, 'min-index')
+        this.addClass(l, 'green')
         for (var i = left; i < right; i++) {
             if (!this.isRunning)
                 return;
             this.addClass(i, 'current')
             if (this.elements[i].value <= pivot) {
-                await this.sleep(this.deplay / 2);
+                await this.sleep(this.deplay);
                 this.swap(l, i);
-                this.removeClass(l, 'min-index')
+                await this.sleep(this.deplay);
+                this.removeClass(l, 'green')
                 l++;
-                await this.sleep(this.deplay / 2);
-                this.addClass(l, 'min-index')
+                await this.sleep(this.deplay);
+                this.addClass(l, 'green')
 
 
             }
             await this.sleep(this.deplay);
             this.removeClass(i, 'current')
         }
-        this.removeClass(l, 'min-index')
+        await this.sleep(this.deplay);
+        this.removeClass(l, 'green')
         this.swap(right, l);
-        this.elements[left].classList.remove('left');
-        this.elements[right].classList.remove('right');
+        this.removeClass(left, 'left');
+        this.removeClass(right, 'right');
         await this._quickSort(left, l - 1)
         await this._quickSort(l + 1, right);
+    }
+
+    async _mergeSort(left, right) {
+        if (left >= right) {
+            return [this.elements[left].value];
+
+        }
+
+        var mid = Math.floor((left + right) / 2);
+        var leftArr = await this._mergeSort(left, mid);
+        var rightArr = await this._mergeSort(mid + 1, right);
+        var tempArr = [];
+        tempArr.length = leftArr.length + rightArr.length;
+        var il = 0, ir = 0;
+        this.addClass(left + il, 'green');
+        this.addClass(left + il + leftArr.length, 'green');
+        this.addClass(left, 'left-1')
+        this.addClass(right, 'right-1')
+
+        for (var i = 0; i < tempArr.length; i++) {
+            if (leftArr.length <= il) {
+                this.removeClass(left + ir + leftArr.length, 'green');
+                tempArr[i] = rightArr[ir++];
+                if (ir < rightArr.length)
+                    this.addClass(left + ir + leftArr.length, 'green');
+                await this.sleep(this.deplay);
+            } else if (rightArr.length <= ir) {
+                this.removeClass(left + il, 'green');
+                tempArr[i] = leftArr[il++];
+                if (il < leftArr.length)
+                    this.addClass(left + il, 'green');
+                await this.sleep(this.deplay);
+
+
+
+            } else {
+                if (leftArr[il] < rightArr[ir]) {
+                    this.removeClass(left + il, 'green');
+                    tempArr[i] = leftArr[il++];
+                    if (il < leftArr.length)
+                        this.addClass(left + il, 'green');
+                    await this.sleep(this.deplay);
+                } else {
+                    this.removeClass(left + ir + leftArr.length, 'green');
+                    tempArr[i] = rightArr[ir++];
+                    if (ir < rightArr.length)
+                        this.addClass(left + ir + leftArr.length, 'green');
+                    await this.sleep(this.deplay);
+                }
+            }
+            if (!this.isRunning)
+                return;
+
+        }
+        await this.sleep(this.deplay);
+
+        for (var i = left; i <= right; i++) {
+            this.setElementValue(i, tempArr[i - left]);
+        }
+
+        await this.sleep(this.deplay);
+
+        this.removeClass(left, 'left-1')
+        this.removeClass(right, 'right-1')
+        return tempArr;
+    }
+
+    async mergeSort() {
+        if (this.isRunning)
+            return;
+        var start = performance.now();
+
+        this.isRunning = true;
+        await this._mergeSort(0, this.getListSize() - 1);
+        this.isRunning = false;
+        this.renderExcutionTime(performance.now() - start)
+
     }
 
     handleEvent() {
@@ -308,6 +389,16 @@ class App {
         const best = document.querySelector('#best-case');
         const average = document.querySelector('#average-case');
         const worest = document.querySelector('#worest-case');
+        const frame = document.querySelector('#frame')
+
+
+        window.onload = function () {
+            if (window.innerWidth < 768) {
+                _this.frameHeight = window.innerHeight * 0.75
+                frame.style.height = _this.frameHeight + 'px'
+                _this.unsort()
+            }
+        }
 
         startBtn.onclick = function () {
             // if (this.currentAlgorithm)
@@ -402,9 +493,16 @@ class App {
                 }
                 case 'qs': {
                     _this.currentAlgorithm = _this.quickSort;
-                    best.innerHTML = 'Best case: O( nLog(n) )'
-                    average.innerHTML = 'Average case: O( nLog(n) )'
+                    best.innerHTML = 'Best case: O( nlog(n) )'
+                    average.innerHTML = 'Average case: O( nlog(n) )'
                     worest.innerHTML = 'Worest case: O( n<sup>2</sup> )'
+                    break
+                }
+                case 'ms': {
+                    _this.currentAlgorithm = _this.mergeSort;
+                    best.innerHTML = 'Best case: O( nlog(n) )'
+                    average.innerHTML = 'Average case: O( nlog(n) )'
+                    worest.innerHTML = 'Worest case: O( nlog(n) )'
                 }
             }
         }
