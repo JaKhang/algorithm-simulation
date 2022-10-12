@@ -315,7 +315,7 @@ class App {
         this.addClass(left + il + leftArr.length, 'green');
         this.addClass(left, 'left-1')
         this.addClass(right, 'right-1')
-
+        await this.sleep(this.deplay);
         for (var i = 0; i < tempArr.length; i++) {
             if (leftArr.length <= il) {
                 this.removeClass(left + ir + leftArr.length, 'green');
