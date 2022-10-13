@@ -75,8 +75,6 @@ class App {
         }
     }
 
-
-
     getListSize() {
         return this.elements.length;
     }
@@ -116,7 +114,6 @@ class App {
         var temp = this.elements[i1].value;
         this.setElementValue(i1, this.elements[i2].value);
         this.setElementValue(i2, temp);
-
     }
 
     sleep(ms) {
@@ -151,7 +148,7 @@ class App {
             return;
         this.isRunning = true;
         var start = performance.now();
-        for (let i = 0; i < this.getListSize(); i++) {
+        for (let i = 0; i < this.getListSize() - 2; i++) {
             var indexOfMin = i;
             this.addClass(indexOfMin, 'green')
             this.addClass(i, 'loop1');
@@ -238,8 +235,6 @@ class App {
             this.removeClass(i, 'current');
             if (!this.isRunning)
                 return;
-
-
         }
         this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
