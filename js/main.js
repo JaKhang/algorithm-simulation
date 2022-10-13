@@ -474,7 +474,7 @@ class App {
                 }
                 case 'bs': {
                     _this.currentAlgorithm = _this.bubbleSort;
-                    best.innerHTML = 'Best case: O( n<sup>2</sup> )'
+                    best.innerHTML = 'Best case: O( n )'
                     average.innerHTML = 'Average case: O( n<sup>2</sup> )'
                     worest.innerHTML = 'Worest case: O( n<sup>2</sup> )'
                     break
