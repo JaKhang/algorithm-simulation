@@ -148,7 +148,7 @@ class App {
             return;
         this.isRunning = true;
         var start = performance.now();
-        for (let i = 0; i < this.getListSize() - 2; i++) {
+        for (let i = 0; i < this.getListSize() - 1; i++) {
             var indexOfMin = i;
             this.addClass(indexOfMin, 'green')
             this.addClass(i, 'loop1');
