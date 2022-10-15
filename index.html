@@ -34,8 +34,8 @@
                     <label for="deplay">Deplay</label><br>
                     <input type="number" placeholder="ms" name="deplay" class="input-feild" step="100" value="0"
                         id="deplay">
-                    <div class="range-group"><label for="">1</label>
-                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="50"
+                    <div class="range-group"><label for="">5</label>
+                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="50" min="0"
                             value="0" max="1000">
                         <label for="">1000</label>
                     </div>
@@ -56,7 +56,8 @@
                 <div class="header-group">
                     <button class="btn" id="start-btn">Start</button>
                     <button class="btn" id="reset-btn">Reset</button>
-                    <button class="btn" id="compound-btn">Compound</button>
+                    <button class="btn" id="random-btn">Random</button>
+                    <button class="btn" id="custom-btn">Custom</button>
                 </div>
 
             </div>
@@ -71,8 +72,15 @@
             </div>
         </div>
 
-        <div id="frame">
+        <div id="frame"></div>
 
+        <div id="modal" class="">
+            <div id="overlay"></div>
+            <div id="input-modal" class="">
+                <input type="text" class="input-feild" id="list-input" placeholder="Enter elements ( 9 12 3 29 10 )">
+                <button class="btn" id="submit-btn">Create</button>
+                <button class="btn" id="cancel-btn">Cancel</button>
+            </div>
         </div>
     </div>
     <script src="./js/main.js"></script>

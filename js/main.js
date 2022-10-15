@@ -3,29 +3,22 @@ class App {
         this.frameHeight = 540;
         this.elements = [];
         this.isShowText = false
+        this.setListSize(50);
         this.deplay = 0;
         this.isRunning = false;
         this.currentAlgorithm = this.selectionSort;
-        this.setListSize(50);
         this.compound();
         this.handleEvent();
-
     }
-
     // return number 
     //
-    getUnitHeight() {
-        if (this.elements.length == 0)
-            return this.frameHeight;
-        return this.frameHeight / this.elements.length;
-    }
 
     // set innerHTML
     // set Value
     // set element height
     setElementValue(index, value) {
         this.elements[index].value = value;
-        this.elements[index].style.height = (this.getUnitHeight() * value) + "px";
+        this.elements[index].style.height = (this.unitheight * value) + "px";
         if (this.isShowText)
             this.elements[index].innerHTML = value;
         else
@@ -48,6 +41,7 @@ class App {
 
     compound() {
         this.values = this.createRandomValues();
+        this.unitheight = this.frameHeight / this.values.length;
         this.unsort()
     }
 
@@ -60,8 +54,8 @@ class App {
             this.removeAllClass('max')
             this.removeAllClass('left')
             this.removeAllClass('right')
-            this.removeAllClass('left-1')
-            this.removeAllClass('right-1')
+            this.removeAllClass('pivot')
+
         }
         this.renderExcutionTime("---")
 
@@ -84,25 +78,26 @@ class App {
             return;
         this.isShowText = n <= 50;
         if (n > this.getListSize())
-            this.addElements(n - this.getListSize());
+            this.addElements(n);
         else
-            this.removeElements(this.getListSize() - n);
+            this.removeElements(n);
+        this.unitheight = this.frameHeight / n;
         this.compound();
 
     }
 
     removeElements(n) {
         var frame = document.querySelector('#frame');
-        var nodes = frame.childNodes
-        for (var i = 1; i <= n; i++) {
-            frame.removeChild(nodes[0]);
+        var nodes = frame.childNodes;
+        while (nodes.length != n) {
+            frame.removeChild(nodes[0])
         }
         this.elements = frame.querySelectorAll('.element');
     }
 
     addElements(n) {
         var frame = document.querySelector('#frame');
-        for (var i = 1; i <= n; i++) {
+        while (frame.childElementCount != n) {
             var element = document.createElement('div');
             element.classList.add('element');
             frame.appendChild(element);
@@ -135,6 +130,26 @@ class App {
             document.querySelector("#execution-time").innerHTML = 'Execution time : ' + Math.floor(time) + ' ms';
     }
 
+    setCustomList(string) {
+        if (!string)
+            return;
+
+        var tempList = string.trim().split(' ')
+        for (var value of tempList) {
+            if (isNaN(value) || value <= 0) {
+                alert('Invalid input');
+                return;
+            }
+        }
+
+        tempList = tempList.filter((value) => value != '').map((value) => Number.parseInt(value));
+        var maxValue = tempList.reduce((max, value) => max < value ? value : max, 0)
+        var minValue = tempList.reduce((min, value) => min > value ? value : min, maxValue)
+        this.setListSize(tempList.length);
+        this.unitheight = this.frameHeight / (maxValue - minValue + 1);
+        this.values = tempList;
+    }
+
 
     /*
         Algorithm
@@ -148,22 +163,24 @@ class App {
             return;
         this.isRunning = true;
         var start = performance.now();
-        for (let i = 0; i < this.getListSize() - 2; i++) {
+        for (let i = 0; i < this.getListSize() - 1; i++) {
             var indexOfMin = i;
+            await this.sleep(this.deplay);
             this.addClass(indexOfMin, 'green')
             this.addClass(i, 'loop1');
             for (let j = i + 1; j < this.getListSize(); j++) {
+
                 this.addClass(j, 'current')
-                await this.sleep(this.deplay)
+                await this.sleep(this.deplay)// sleep
 
                 if (this.elements[indexOfMin].value > this.elements[j].value) {
                     this.elements[indexOfMin].classList.remove('green')
                     this.addClass(j, 'green')
                     indexOfMin = j;
                 }
-                await this.sleep(this.deplay)
+                await this.sleep(this.deplay) // sleep
                 this.removeClass(j, 'current');
-                await this.sleep(this.deplay)
+                await this.sleep(this.deplay) // sleep
 
                 if (!this.isRunning)
                     return;
@@ -175,8 +192,9 @@ class App {
 
 
         }
-        this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
+        this.renderExcutionTime(performance.now() - start)
+
     }
 
     async bubbleSort() {
@@ -223,18 +241,23 @@ class App {
 
             var temp = this.elements[i].value;
             this.elements[i].value = 0
-            await this.sleep(this.deplay)
+            await this.sleep(this.deplay)// sleep
             var j = i;
+
             while (j > 0 && this.elements[j - 1].value > temp) {
-                await this.sleep(this.deplay)
+                let start = performance.now();
+                await this.sleep(this.deplay) //sleep
+                await this.sleep(this.deplay)//sleep
                 this.swap(j, j - 1)
+                await this.sleep(this.deplay)//sleep
                 j--;
             }
             this.setElementValue(j, temp)
-            await this.sleep(this.deplay)
+            await this.sleep(this.deplay)//sleep
             this.removeClass(i, 'current');
             if (!this.isRunning)
                 return;
+
         }
         this.renderExcutionTime(performance.now() - start)
         this.isRunning = false;
@@ -265,6 +288,8 @@ class App {
         }
 
         var pivot = this.elements[right].value;
+        await this.sleep(this.deplay);
+        this.addClass(right, 'pivot');
         var l = left;
         this.addClass(l, 'green')
         for (var i = left; i < right; i++) {
@@ -277,16 +302,20 @@ class App {
                 await this.sleep(this.deplay);
                 this.removeClass(l, 'green')
                 l++;
-                await this.sleep(this.deplay);
                 this.addClass(l, 'green')
 
 
+            } else {
+                await this.sleep(this.deplay);
+                await this.sleep(this.deplay);
             }
             await this.sleep(this.deplay);
             this.removeClass(i, 'current')
+
         }
         await this.sleep(this.deplay);
         this.removeClass(l, 'green')
+        this.removeClass(right, 'pivot');
         this.swap(right, l);
         this.removeClass(left, 'left');
         this.removeClass(right, 'right');
@@ -308,10 +337,12 @@ class App {
         var il = 0, ir = 0;
         this.addClass(left + il, 'green');
         this.addClass(left + il + leftArr.length, 'green');
-        this.addClass(left, 'left-1')
-        this.addClass(right, 'right-1')
+        this.addClass(left, 'left')
+        this.addClass(right, 'right')
         await this.sleep(this.deplay);
         for (var i = 0; i < tempArr.length; i++) {
+
+            await this.sleep(this.deplay);
             if (leftArr.length <= il) {
                 this.removeClass(left + ir + leftArr.length, 'green');
                 tempArr[i] = rightArr[ir++];
@@ -344,6 +375,8 @@ class App {
             }
             if (!this.isRunning)
                 return;
+            await this.sleep(this.deplay);
+
 
         }
         await this.sleep(this.deplay);
@@ -354,20 +387,21 @@ class App {
 
         await this.sleep(this.deplay);
 
-        this.removeClass(left, 'left-1')
-        this.removeClass(right, 'right-1')
+        this.removeClass(left, 'left')
+        this.removeClass(right, 'right')
         return tempArr;
     }
 
     async mergeSort() {
         if (this.isRunning)
             return;
-        var start = performance.now();
 
         this.isRunning = true;
+        var start = performance.now();
         await this._mergeSort(0, this.getListSize() - 1);
-        this.isRunning = false;
         this.renderExcutionTime(performance.now() - start)
+
+        this.isRunning = false;
 
     }
 
@@ -375,7 +409,7 @@ class App {
         const _this = this;
         const startBtn = document.querySelector('#start-btn');
         const resetBtn = document.querySelector('#reset-btn');
-        const compoundBtn = document.querySelector('#compound-btn');
+        const compoundBtn = document.querySelector('#random-btn');
         const listSizeInput = document.querySelector('#list-size');
         const rangeSize = document.querySelector('#range-size');
         const deplayInput = document.querySelector('#deplay');
@@ -385,6 +419,11 @@ class App {
         const average = document.querySelector('#average-case');
         const worest = document.querySelector('#worest-case');
         const frame = document.querySelector('#frame')
+        const modalCancelBtn = document.querySelector('#cancel-btn');
+        const modal = document.querySelector('#modal');
+        const listInput = document.querySelector('#list-input');
+        const modalSubmit = document.querySelector('#submit-btn');
+        const customBtn = document.querySelector('#custom-btn')
 
 
         window.onload = function () {
@@ -422,7 +461,7 @@ class App {
 
         listSizeInput.onblur = function () {
             var size = listSizeInput.value;
-            if (size >= 0 && size <= 2000)
+            if (size > 1 && size <= 2000)
                 _this.setListSize(size);
             rangeSize.value = size;
             resetBtn.click();
@@ -500,6 +539,33 @@ class App {
                     worest.innerHTML = 'Worest case: O( nlog(n) )'
                 }
             }
+        }
+
+        modalCancelBtn.onclick = () => {
+            modal.classList.add('hide')
+        }
+
+        modalSubmit.onclick = () => {
+            var string = listInput.value;
+            if (!string)
+                return;
+            this.setCustomList(string);
+            rangeSize.value = _this.getListSize();
+            listSizeInput.value = _this.getListSize();
+            resetBtn.click();
+
+            modal.classList.add('hide')
+        }
+
+        listInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                modalSubmit.click();
+            }
+        });
+
+        customBtn.onclick = () => {
+            modal.classList.remove('hide')
         }
     }
 }
