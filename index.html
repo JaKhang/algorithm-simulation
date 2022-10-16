@@ -17,73 +17,16 @@
 
 <body>
     <div id="root">
-        <div id="header">
-            <h2 class="logo">Algorithm</h2>
-            <div class="header-control">
-                <div class="header-group"><label for="algorithm">Algorithm</label><br>
-                    <select name="algorithm" id="algorithm-select" class="input-feild">
-                        <option value="ss">Selection sort</option>
-                        <option value="bs">Bubble sort</option>
-                        <option value="is">Insertion sort</option>
-                        <option value="qs">Quick sort</option>
-                        <option value="ms">Merge sort</option>
-                    </select>
-                </div>
-
-                <div class="header-group">
-                    <label for="deplay">Deplay</label><br>
-                    <input type="number" placeholder="ms" name="deplay" class="input-feild" step="100" value="0"
-                        id="deplay">
-                    <div class="range-group"><label for="">5</label>
-                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="50" min="0"
-                            value="0" max="1000">
-                        <label for="">1000</label>
-                    </div>
-
-                </div>
-
-                <div class="header-group">
-                    <label for="list-size">List size</label><br>
-                    <input type="number" placeholder="" name="list-size" id="list-size" class="input-feild" value="50">
-                    <div class="range-group">
-                        <label for="">1</label>
-                        <input type="range" class="range-input" name="range-size" id="range-size" step="1" max="2000"
-                            min="1" value="50">
-                        <label for="">2000</label>
-                    </div>
-                </div>
-
-                <div class="header-group">
-                    <button class="btn" id="start-btn">Start</button>
-                    <button class="btn" id="reset-btn">Reset</button>
-                    <button class="btn" id="random-btn">Random</button>
-                    <button class="btn" id="custom-btn">Custom</button>
-                </div>
-
-            </div>
-        </div>
-        <div id="info">
-            <h2 class="info-header">Time complexity</h2>
-            <div class="info-body">
-                <h3 id="best-case">Best case: O( n<sup>2</sup> )</h3>
-                <h3 id="average-case">Average case: O( n<sup>2</sup> )</h3>
-                <h3 id="worest-case">Worest case: O( n<sup>2</sup> )</h3>
-                <h3 id="execution-time">Execution time: </h3>
-            </div>
-        </div>
-
-        <div id="frame"></div>
-
-        <div id="modal" class="">
-            <div id="overlay"></div>
-            <div id="input-modal" class="">
-                <input type="text" class="input-feild" id="list-input" placeholder="Enter elements ( 9 12 3 29 10 )">
-                <button class="btn" id="submit-btn">Create</button>
-                <button class="btn" id="cancel-btn">Cancel</button>
-            </div>
-        </div>
     </div>
-    <script src="./js/main.js"></script>
+    <script src="./js/Element.js" type="module"></script>
+    <script src="./js/App.js" type="module"></script>
+    <script src="./js/SelectionSort.js" type="module"></script>
+    <script src="./js/BubbleSort.js" type="module"></script>
+    <script src="./js/InsertionSort.js" type="module"></script>
+    <script src="./js/QuickSort1.js" type="module"></script>
+    <script src="./js/QuickSort2.js" type="module"></script>
+    <script src="./js/MergeSort.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
 </body>
 
 </html>
