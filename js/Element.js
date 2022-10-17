@@ -20,6 +20,10 @@ class Elements {
         return this.elements[index].value;
     }
 
+    getMaxValue() {
+        return this.values.reduce((max, value) => max < value ? value : max, 0);
+    }
+
     getListSize() {
         return this.elements.length;
     }
