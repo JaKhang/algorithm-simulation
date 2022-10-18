@@ -105,7 +105,8 @@ class Elements {
         var maxValue = tempList.reduce((max, value) => max < value ? value : max, 0)
         var minValue = tempList.reduce((min, value) => min > value ? value : min, maxValue)
         this.setListSize(tempList.length);
-        this.unitheight = this.frameHeight / (maxValue - minValue + 1);
+        this.unitheight = this.frameHeight / maxValue;
+        console.log(maxValue, minValue);
         this.values = tempList;
     }
 
