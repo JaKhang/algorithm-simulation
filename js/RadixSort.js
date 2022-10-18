@@ -1,9 +1,9 @@
 class RadixSort {
     constructor() {
         this.title = "Radix sort (LSD)"
-        this.best = 'O( n<sup>2</sup> )'
-        this.average = 'O( n<sup>2</sup> )'
-        this.worest = 'O( n<sup>2</sup> )'
+        this.best = 'O( n + k )'
+        this.average = 'O( n + k )'
+        this.worest = 'O( n + k )'
     }
     async sort(elements) {
         if (!this.countSort) {
