@@ -96,7 +96,7 @@ class Elements {
         var tempList = string.trim().split(' ')
         for (var value of tempList) {
             if (isNaN(value) || value <= 0) {
-                alert('Invalid input (value must be integer number and greater than 5)');
+                alert('Invalid input (value must be integer number and greater than 0)');
                 return;
             }
         }
