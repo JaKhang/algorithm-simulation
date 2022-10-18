@@ -28,11 +28,11 @@ class App {
 
                 <div class="header-group">
                     <label for="deplay">Deplay</label><br>
-                    <input type="number" placeholder="ms" name="deplay" class="input-feild" step="100" value="0"
+                    <input type="number" placeholder="ms" name="deplay" class="input-feild" step="100" value="15"
                         id="deplay">
-                    <div class="range-group"><label for="">5</label>
-                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="50" min="0"
-                            value="0" max="1000">
+                    <div class="range-group"><label for="">15</label>
+                        <input type="range" class="range-input" name="range-deplay" id="range-deplay" step="5" min="15"
+                            value="15" max="1000">
                         <label for="">1000</label>
                     </div>
 
@@ -185,14 +185,14 @@ class App {
         rangeDeplay.onchange = function () {
             var deplay = rangeDeplay.value;
             deplayInput.value = deplay;
-            _this.deplay = deplay;
+            _this.deplay = deplay - 15;
 
         }
 
         deplayInput.onblur = function () {
             var deplay = deplayInput.value;
             if (deplay >= 0 && deplay <= 10000)
-                _this.deplay = deplay;
+                _this.deplay = deplay - 15;
             rangeDeplay.value = deplay;
         }
 
