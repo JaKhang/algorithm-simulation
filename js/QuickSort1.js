@@ -1,6 +1,6 @@
 class QuickSort1 {
     constructor() {
-        this.title = "Quick sort (left pivot)"
+        this.title = "Quick sort (right pivot)"
         this.best = 'O( nlog(n) )'
         this.average = 'O( nlog(n) )'
         this.worest = 'O( n<sup>2</sup> )'
